@@ -16,7 +16,7 @@ O servico principal roda em `0.0.0.0:8188` e sera consumido futuramente por um g
 
 - Pod RunPod com suporte a GPU
 - Volume persistente montado em `/workspace`
-- Linux com `bash`, `git`, `curl` e `python3`
+- Linux com `bash`, `git`, `curl`, `python3` e `apt-get`
 - Acesso de rede para clonar o ComfyUI e baixar dependencias
 - URLs confirmadas dos custom nodes, se necessario
 
@@ -62,6 +62,8 @@ chmod +x scripts/*.sh
 ./scripts/download-models.sh
 ```
 
+O `install-comfyui.sh` garante a presenca do `ffmpeg`, instala o pacote automaticamente via `apt-get` quando necessario e falha cedo se o binario nao puder ser disponibilizado no `PATH`.
+
 ## Como rodar
 
 Para iniciar o ComfyUI:
@@ -83,6 +85,8 @@ Antes de iniciar o processo principal, o script tambem registra diagnosticos do 
 Validacao basica:
 
 ```bash
+which ffmpeg
+ffmpeg -version
 ./scripts/healthcheck.sh
 curl http://127.0.0.1:8188/object_info
 ```
@@ -126,6 +130,7 @@ O payload base de transcricao esta em `workflows/whisper-large-v2.json`.
 ## Troubleshooting rapido
 
 - `Connection refused`: confirme se `start-comfyui.sh` foi executado com sucesso.
+- `FileNotFoundError: [Errno 2] No such file or directory: 'ffmpeg'`: execute `apt-get update && apt-get install -y ffmpeg` e rode `./scripts/install-comfyui.sh` novamente.
 - `Model not found`: confirme o volume montado e o caminho `/workspace/models/whisper`.
 - `Custom node ausente`: confirme se o clone de `https://github.com/yuvraj108c/ComfyUI-Whisper` foi concluido corretamente.
 - `Falta de VRAM`: priorize GPU com 16 GB ou mais para `large-v2`.

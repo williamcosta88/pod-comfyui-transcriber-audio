@@ -12,6 +12,14 @@ if ! command -v curl >/dev/null 2>&1; then
   exit 1
 fi
 
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  log "ffmpeg is not available in PATH"
+  exit 1
+fi
+
+log "checking ffmpeg availability"
+ffmpeg -version >/dev/null
+
 log "checking ComfyUI health endpoint"
 curl -fsS "http://127.0.0.1:${COMFYUI_PORT}/system_stats"
 log "healthcheck succeeded"

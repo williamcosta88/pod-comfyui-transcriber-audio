@@ -19,8 +19,38 @@ require_command() {
 require_command git
 require_command python3
 
+install_ffmpeg_if_needed() {
+  if command -v ffmpeg >/dev/null 2>&1; then
+    log "ffmpeg already available in PATH"
+    return 0
+  fi
+
+  if ! command -v apt-get >/dev/null 2>&1; then
+    log "ERROR: ffmpeg is missing and apt-get is not available to install it automatically"
+    exit 1
+  fi
+
+  if [[ "$(id -u)" -ne 0 ]]; then
+    log "ERROR: ffmpeg is missing and automatic installation requires root privileges"
+    exit 1
+  fi
+
+  log "ffmpeg not found. Installing with apt-get"
+  apt-get update
+  apt-get install -y ffmpeg
+
+  if ! command -v ffmpeg >/dev/null 2>&1; then
+    echo "[install-comfyui] ERROR: ffmpeg was not installed or is not available in PATH"
+    exit 1
+  fi
+
+  log "ffmpeg installed successfully"
+}
+
 log "ensuring workspace directory exists at $WORKSPACE_DIR"
 mkdir -p "$WORKSPACE_DIR"
+
+install_ffmpeg_if_needed
 
 if [[ -d "$COMFYUI_DIR/.git" ]]; then
   log "existing ComfyUI repository found at $COMFYUI_DIR, skipping clone"

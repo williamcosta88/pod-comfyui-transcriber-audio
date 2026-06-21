@@ -28,6 +28,28 @@ Acao recomendada:
 - verificar volume persistente;
 - confirmar disponibilidade de VRAM.
 
+## FileNotFoundError: No such file or directory: 'ffmpeg'
+
+Possivel causa:
+
+- o pacote `ffmpeg` nao foi instalado no container ou nao esta disponivel no `PATH`.
+
+Solucao:
+
+```bash
+apt-get update
+apt-get install -y ffmpeg
+```
+
+Depois disso, valide:
+
+```bash
+which ffmpeg
+ffmpeg -version
+./scripts/install-comfyui.sh
+./scripts/healthcheck.sh
+```
+
 ## Modelo nao encontrado
 
 Possiveis causas:

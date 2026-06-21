@@ -10,6 +10,7 @@
 - [x] Criar script install-comfyui.sh
 - [x] Garantir idempotencia
 - [x] Validar presenca de main.py
+- [x] Instalar e validar ffmpeg para suporte a audio/Whisper
 - [x] Documentar instalacao
 
 ## Phase 2 - Custom Nodes

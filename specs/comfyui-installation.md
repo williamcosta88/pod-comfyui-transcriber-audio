@@ -15,13 +15,26 @@ Script responsavel:
 Fluxo esperado:
 
 1. Garantir que `/workspace` exista.
-2. Clonar o repositorio do ComfyUI em `/workspace/ComfyUI` se ainda nao existir.
-3. Validar a presenca de `/workspace/ComfyUI/main.py`.
-4. Instalar dependencias Python a partir de `requirements.txt`.
+2. Instalar `ffmpeg` automaticamente via `apt-get` quando o binario ainda nao estiver disponivel.
+3. Validar a presenca de `ffmpeg` no `PATH`.
+4. Clonar o repositorio do ComfyUI em `/workspace/ComfyUI` se ainda nao existir.
+5. Validar a presenca de `/workspace/ComfyUI/main.py`.
+6. Instalar dependencias Python a partir de `requirements.txt`.
 
 ## Instalar dependencias Python
 
 O script usa `python3 -m pip install --upgrade pip` e `python3 -m pip install -r requirements.txt`. Dependencias adicionais especificas de custom nodes devem ser instaladas depois, quando os repositorios corretos estiverem configurados.
+
+## Instalar ffmpeg
+
+O workflow de audio e o custom node Whisper dependem do comando `ffmpeg` para carregar e processar arquivos de audio. Por isso o bootstrap inclui uma etapa explicita equivalente a:
+
+```bash
+apt-get update
+apt-get install -y ffmpeg
+```
+
+Depois da instalacao, o script valida o binario com `command -v ffmpeg` e interrompe o processo se o comando continuar indisponivel.
 
 ## Instalar custom nodes
 
