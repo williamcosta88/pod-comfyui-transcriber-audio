@@ -1,0 +1,40 @@
+{
+  "prompt": {
+    "1": {
+      "inputs": {
+        "audio": "sample.mp3"
+      },
+      "class_type": "LoadAudio",
+      "_meta": {
+        "title": "Load Audio"
+      }
+    },
+    "2": {
+      "inputs": {
+        "model": "large-v2",
+        "language": "Portuguese",
+        "prompt": "Portugues do Brasil",
+        "audio": [
+          "1",
+          0
+        ]
+      },
+      "class_type": "Apply Whisper",
+      "_meta": {
+        "title": "Apply Whisper"
+      }
+    },
+    "7": {
+      "inputs": {
+        "source": [
+          "2",
+          0
+        ]
+      },
+      "class_type": "PreviewAny",
+      "_meta": {
+        "title": "Preview Text"
+      }
+    }
+  }
+}
