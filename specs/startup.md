@@ -16,6 +16,7 @@ Antes de iniciar, confira:
 - `curl` disponivel para healthcheck;
 - `main.py` presente em `/workspace/ComfyUI`;
 - volume persistente montado em `/workspace`.
+- disponibilidade de GPU via `nvidia-smi`, quando o Pod for configurado para GPU.
 
 ## Healthcheck em /system_stats
 
@@ -31,6 +32,7 @@ Durante o startup, os logs devem indicar:
 
 - diretorio do ComfyUI encontrado;
 - host e porta configurados;
+- diagnostico de GPU/CUDA via `nvidia-smi` e `torch.cuda`;
 - inicializacao do processo Python;
 - disponibilidade subsequente dos endpoints HTTP.
 
@@ -41,5 +43,6 @@ Sinais comuns:
 - `main.py` ausente;
 - porta `8188` sem resposta;
 - erro de importacao Python;
+- `torch.cuda.is_available()` retornando `false` em um Pod que deveria usar GPU;
 - falha ao carregar custom node;
 - timeout prolongado ao inicializar modelo.

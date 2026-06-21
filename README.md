@@ -76,6 +76,8 @@ Isso executa:
 python3 main.py --listen 0.0.0.0 --port 8188
 ```
 
+Antes de iniciar o processo principal, o script tambem registra diagnosticos do ambiente, incluindo verificacao de `nvidia-smi`, status de `torch.cuda` e alerta caso o container esteja prestes a rodar em CPU.
+
 ## Como testar
 
 Validacao basica:
